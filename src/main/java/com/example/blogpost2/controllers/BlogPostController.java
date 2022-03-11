@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("blogpost")
@@ -26,8 +27,8 @@ public class BlogPostController {
     @Autowired
     AuthorService authorService;
 
-//    @Autowired
-//    CommentService commentService;
+    @Autowired
+    CommentService commentService;
 
     @PostMapping
     public ResponseEntity<BlogPost> createBlogPost (@RequestBody BlogPostDTO blogPostDTO){
@@ -46,6 +47,16 @@ public class BlogPostController {
     @GetMapping
     public ResponseEntity<List<BlogPost>> getAllBlogPost() {
         return ResponseEntity.ok(blogPostService.findAll());
+    }
+
+    @GetMapping("/comment/{id}")
+    public ResponseEntity<Set<Comment>> getComments(@PathVariable Long id){
+        return blogPostService.getAllComments(id);
+    }
+
+    @GetMapping("comment-size/{id}")
+    public ResponseEntity<Integer> getCommentSize(@PathVariable Long id){
+        return blogPostService.getCommentSize(id);
     }
 
     @GetMapping("/{id}")

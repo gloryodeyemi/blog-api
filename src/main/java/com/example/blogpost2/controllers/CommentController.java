@@ -39,14 +39,15 @@ public class CommentController {
         comment.setMessage(commentDto.getMessage());
         Author author = authorService.findById(commentDto.getAuthor());
         if (author == null){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
         comment.setAuthor(author);
         BlogPost blogPost = blogPostService.findById(commentDto.getBlogPost());
         if (blogPost == null) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
         comment.setBlogPost(blogPost);
+
         return ResponseEntity.ok(commentService.save(comment));
     }
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class BlogPostService implements CrudService<BlogPost, Long> {
@@ -51,6 +52,24 @@ public class BlogPostService implements CrudService<BlogPost, Long> {
     public Page<BlogPost> findAllByPage(Pageable pageable) {
         return null;
     }
+
+    public ResponseEntity<Set<Comment>> getAllComments(Long postId) {
+        Optional <BlogPost> blogPost = blogPostRepository.findById(postId);
+        if (blogPost.isPresent()){
+             return ResponseEntity.ok(blogPost.get().getComments());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    public ResponseEntity<Integer> getCommentSize(Long postId) {
+        Optional <BlogPost> blogPost = blogPostRepository.findById(postId);
+        if (blogPost.isPresent()){
+             return ResponseEntity.ok(blogPost.get().getComments().size());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
 
 //    public ResponseEntity<BlogPost> saveComment(Long commentId, Long id) {
 //        Optional <BlogPost> blogPost = blogPostRepository.findById(id);
