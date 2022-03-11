@@ -34,7 +34,7 @@ public class BlogPost {
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
     private Set<Comment> comments;
 
-    private int commentCount = 0;
+//    private int commentCount = 0;
 
 //    @OneToMany
 //    private Set<Like> likes;

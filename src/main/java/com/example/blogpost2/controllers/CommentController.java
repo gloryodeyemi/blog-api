@@ -32,16 +32,17 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<Comment> createComment (@RequestBody CommentDto commentDto ){
-//            , @PathVariable() Long blogPostId){
         Comment comment =  new Comment();
-//        Comment comment = commentService.save(commentDto, blogPostId);
 
+        // attach author
         comment.setMessage(commentDto.getMessage());
         Author author = authorService.findById(commentDto.getAuthor());
         if (author == null){
             return ResponseEntity.notFound().build();
         }
         comment.setAuthor(author);
+
+        // attach blog post
         BlogPost blogPost = blogPostService.findById(commentDto.getBlogPost());
         if (blogPost == null) {
             return ResponseEntity.notFound().build();

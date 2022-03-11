@@ -24,6 +24,7 @@ public class Comment {
 
     @ManyToOne
 //    @JoinColumn(name = "blogpost_id", referencedColumnName = "blogpost_id", nullable = false)
+    @JoinTable(name = "blogpost_comment")
     private BlogPost blogPost;
 
     @CreationTimestamp
