@@ -1,5 +1,6 @@
 package com.example.blogpost2.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,6 +33,7 @@ public class BlogPost {
     private Author author;
 
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Comment> comments;
 
 //    private int commentCount = 0;
