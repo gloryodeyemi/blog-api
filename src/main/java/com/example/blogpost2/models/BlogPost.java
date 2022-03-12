@@ -1,5 +1,6 @@
 package com.example.blogpost2.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,12 +34,14 @@ public class BlogPost {
     private Author author;
 
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
+//    @JsonManagedReference
     private Set<Comment> comments;
 
 //    private int commentCount = 0;
 
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
+//    @JsonManagedReference
     private Set<PostLike> likes;
 }

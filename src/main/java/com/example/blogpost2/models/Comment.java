@@ -1,6 +1,7 @@
 package com.example.blogpost2.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,7 +27,8 @@ public class Comment {
     @ManyToOne
 //    @JoinColumn(name = "blogpost_id", referencedColumnName = "blogpost_id", nullable = false)
 //    @JoinTable(name = "blogpost_comment")
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonManagedReference
     private BlogPost blogPost;
 
     @CreationTimestamp
