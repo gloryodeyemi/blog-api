@@ -4,6 +4,7 @@ import com.example.blogpost2.dtos.BlogPostDTO;
 import com.example.blogpost2.models.Author;
 import com.example.blogpost2.models.BlogPost;
 import com.example.blogpost2.models.Comment;
+import com.example.blogpost2.models.PostLike;
 import com.example.blogpost2.services.AuthorService;
 import com.example.blogpost2.services.BlogPostService;
 import com.example.blogpost2.services.CommentService;
@@ -31,13 +32,13 @@ public class BlogPostController {
     CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<BlogPost> createBlogPost (@RequestBody BlogPostDTO blogPostDTO){
+    public ResponseEntity<BlogPost> createBlogPost(@RequestBody BlogPostDTO blogPostDTO) {
         BlogPost blogPost = new BlogPost();
 
         blogPost.setTitle(blogPostDTO.getTitle());
         blogPost.setContent(blogPostDTO.getContent());
         Author author = authorService.findById(blogPostDTO.getAuthor());
-        if (author == null){
+        if (author == null) {
             return ResponseEntity.badRequest().build();
         }
         blogPost.setAuthor(author);
@@ -50,13 +51,23 @@ public class BlogPostController {
     }
 
     @GetMapping("/comment/{id}")
-    public ResponseEntity<Set<Comment>> getComments(@PathVariable Long id){
+    public ResponseEntity<Set<Comment>> getComments(@PathVariable Long id) {
         return blogPostService.getAllComments(id);
     }
 
     @GetMapping("comment-size/{id}")
-    public ResponseEntity<Integer> getCommentSize(@PathVariable Long id){
+    public ResponseEntity<Integer> getCommentSize(@PathVariable Long id) {
         return blogPostService.getCommentSize(id);
+    }
+
+    @GetMapping("/like/{id}")
+    public ResponseEntity<Set<PostLike>> getLikes(@PathVariable Long id) {
+        return blogPostService.getAllLikes(id);
+    }
+
+    @GetMapping("like-size/{id}")
+    public ResponseEntity<Integer> getLikeSize(@PathVariable Long id) {
+        return blogPostService.getLikeSize(id);
     }
 
     @GetMapping("/{id}")
@@ -75,7 +86,7 @@ public class BlogPostController {
         blogPost.setTitle(update.getTitle());
         blogPost.setContent(update.getContent());
         Author author = authorService.findById(update.getAuthor());
-        if (author == null){
+        if (author == null) {
             return ResponseEntity.badRequest().build();
         }
         blogPost.setAuthor(author);
@@ -88,8 +99,4 @@ public class BlogPostController {
         blogPostService.deleteById(id);
     }
 
-//    @PostMapping("/comment")
-//    public ResponseEntity<BlogPost> postComment(@RequestBody Long postId, @RequestBody Long commentId){
-//        return blogPostService.saveComment(commentId, postId);
-//    }
 }

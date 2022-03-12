@@ -2,6 +2,7 @@ package com.example.blogpost2.services;
 
 import com.example.blogpost2.models.BlogPost;
 import com.example.blogpost2.models.Comment;
+import com.example.blogpost2.models.PostLike;
 import com.example.blogpost2.repositories.BlogPostRepository;
 import com.example.blogpost2.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,22 @@ public class BlogPostService implements CrudService<BlogPost, Long> {
         Optional <BlogPost> blogPost = blogPostRepository.findById(postId);
         if (blogPost.isPresent()){
              return ResponseEntity.ok(blogPost.get().getComments().size());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    public ResponseEntity<Set<PostLike>> getAllLikes(Long postId) {
+        Optional <BlogPost> blogPost = blogPostRepository.findById(postId);
+        if (blogPost.isPresent()){
+            return ResponseEntity.ok(blogPost.get().getLikes());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    public ResponseEntity<Integer> getLikeSize(Long postId) {
+        Optional <BlogPost> blogPost = blogPostRepository.findById(postId);
+        if (blogPost.isPresent()){
+            return ResponseEntity.ok(blogPost.get().getLikes().size());
         }
         return ResponseEntity.notFound().build();
     }

@@ -2,8 +2,10 @@ package com.example.blogpost2.controllers;
 
 import com.example.blogpost2.dtos.PostLikeDto;
 import com.example.blogpost2.models.Author;
+import com.example.blogpost2.models.BlogPost;
 import com.example.blogpost2.models.PostLike;
 import com.example.blogpost2.services.AuthorService;
+import com.example.blogpost2.services.BlogPostService;
 import com.example.blogpost2.services.PostLikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,31 +25,42 @@ public class PostLikeController {
     @Autowired
     AuthorService authorService;
 
+    @Autowired
+    BlogPostService blogPostService;
+
     @PostMapping
     public ResponseEntity<PostLike> createLike (@RequestBody PostLikeDto postLikeDto){
         PostLike postLike =  new PostLike();
 
+        // attach user
         Author author = authorService.findById(postLikeDto.getAuthor());
         if (author == null){
             return ResponseEntity.badRequest().build();
         }
         postLike.setAuthor(author);
+
+        // attach blog post
+        BlogPost blogPost = blogPostService.findById(postLikeDto.getBlogPost());
+        if (blogPost == null) {
+            return ResponseEntity.notFound().build();
+        }
+        postLike.setBlogPost(blogPost);
         return ResponseEntity.ok(postLikeService.save(postLike));
     }
 
-    @GetMapping
-    public ResponseEntity<List<PostLike>> getAllPostLikes() {
-        return ResponseEntity.ok(postLikeService.findAll());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<PostLike> getLikeById(@PathVariable Long id) {
-        PostLike postLike = postLikeService.findById(id);
-        if (postLike == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(postLike);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<PostLike>> getAllPostLikes() {
+//        return ResponseEntity.ok(postLikeService.findAll());
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<PostLike> getLikeById(@PathVariable Long id) {
+//        PostLike postLike = postLikeService.findById(id);
+//        if (postLike == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(postLike);
+//    }
 
     @DeleteMapping("/{id}")
     public void deleteOneLike(@PathVariable Long id) {
