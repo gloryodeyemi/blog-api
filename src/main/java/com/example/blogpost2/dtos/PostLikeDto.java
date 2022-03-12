@@ -10,4 +10,5 @@ import javax.persistence.OneToOne;
 public class PostLikeDto {
     private Long id;
     private Long author;
+    private Long blogPost;
 }
