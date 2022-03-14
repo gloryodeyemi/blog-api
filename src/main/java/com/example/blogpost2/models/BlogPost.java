@@ -34,14 +34,14 @@ public class BlogPost {
     private Author author;
 
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
-    @JsonBackReference
-//    @JsonManagedReference
+//    @JsonBackReference
+    @JsonManagedReference
     private Set<Comment> comments;
 
 //    private int commentCount = 0;
 
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
-    @JsonBackReference
-//    @JsonManagedReference
+//    @JsonBackReference
+    @JsonManagedReference
     private Set<PostLike> likes;
 }

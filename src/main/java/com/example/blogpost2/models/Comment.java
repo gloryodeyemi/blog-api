@@ -22,13 +22,15 @@ public class Comment {
     private String message;
 
     @ManyToOne
+    @JsonManagedReference
+//    @JsonBackReference
     private Author author;
 
     @ManyToOne
 //    @JoinColumn(name = "blogpost_id", referencedColumnName = "blogpost_id", nullable = false)
 //    @JoinTable(name = "blogpost_comment")
-//    @JsonBackReference
-    @JsonManagedReference
+    @JsonBackReference
+//    @JsonManagedReference
     private BlogPost blogPost;
 
     @CreationTimestamp

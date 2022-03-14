@@ -21,8 +21,8 @@ public class PostLike {
     private Author author;
 
     @ManyToOne
-//    @JsonBackReference
-    @JsonManagedReference
+    @JsonBackReference
+//    @JsonManagedReference
     private BlogPost blogPost;
 
     @CreationTimestamp

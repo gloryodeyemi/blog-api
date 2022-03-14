@@ -4,6 +4,7 @@ import com.example.blogpost2.dtos.AuthorDto;
 import com.example.blogpost2.dtos.BlogPostDTO;
 import com.example.blogpost2.models.Author;
 import com.example.blogpost2.models.BlogPost;
+import com.example.blogpost2.models.Comment;
 import com.example.blogpost2.services.AuthorService;
 import com.example.blogpost2.services.BlogPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("author")
@@ -56,5 +58,10 @@ public class AuthorController {
     @DeleteMapping("/{id}")
     public void deleteOneAuthor(@PathVariable Long id) {
         authorService.deleteById(id);
+    }
+
+    @GetMapping("/author-comment/{id}")
+    public ResponseEntity<Set<Comment>> getComments(@PathVariable Long id) {
+        return authorService.getAllComments(id);
     }
 }
